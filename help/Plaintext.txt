@@ -1,0 +1,113 @@
+================================================================================
+                    TEXT-TO-SONG CHEAT SHEET
+================================================================================
+
+THE ALGORITHM
+─────────────
+Every character converts to a musical note using:
+  semitone = ASCII code % 12
+  octave = base_octave + (ASCII code / 12) % range
+
+This means EVERY character always maps to the SAME note, every time.
+
+
+THE 12 CHROMATIC NOTES (repeating cycle)
+─────────────────────────────────────────
+A  A#  B  C  C#  D  D#  E  F  F#  G  G#  [repeat]
+
+
+SPECIAL CHARACTERS
+──────────────────
+SPACE        = REST (silence)
+TAB          = REST (silence)  
+NEWLINE      = SHORT REST (quarter pause)
+
+
+UPPERCASE LETTERS (A-Z)
+───────────────────────
+A=A4  B=B4  C=C5  D=D5  E=E5  F=F5  G=G5  H=G#5
+I=A5  J=A#5  K=B5  L=C6  M=C#6  N=D6  O=D#6  P=E6
+Q=F6  R=F#6  S=G6  T=G#6  U=A6  V=A#6  W=B6  X=C7
+Y=C#7  Z=D7
+
+
+LOWERCASE LETTERS (a-z)
+───────────────────────
+a=A5  b=B5  c=C6  d=C#6  e=D6  f=D#6  g=E6  h=F6
+i=F#6  j=G6  k=G#6  l=A6  m=A#6  n=B6  o=C7  p=C#7
+q=D7  r=D#7  s=E7  t=F7  u=F#7  v=G7  w=G#7  x=A7
+y=A#7  z=B7
+
+
+DIGITS (0-9)
+────────────
+0=C4  1=C#4  2=D4  3=D#4  4=E4  5=F4  6=F#4  7=G4  8=G#4  9=A4
+
+
+COMMON SYMBOLS & PUNCTUATION
+─────────────────────────────
+! = F#3      " = G3       # = G#3      $ = A3       % = A#3
+& = B3       ' = C4       ( = C#4      ) = D4       * = D#4
++ = E4       , = F4       - = F#4      . = G4       / = G#4
+: = D5       ; = D#5      < = E5       = = F5       > = F#5
+? = G5       @ = G#5      [ = B5       \ = C6       ] = C#6
+^ = D6       _ = D#6      ` = E6       { = B6       | = C7
+} = C#7      ~ = D7
+
+
+EXAMPLES
+────────
+
+"Hello"
+→ H=A, e=F, l=A, l=A, o=C
+→ MELODY: A-F-A-A-C
+
+"Music"
+→ M=F, u=A, s=G, i=A, c=C
+→ MELODY: F-A-G-A-C
+
+"Code"
+→ C=G, o=C, d=D, e=F
+→ MELODY: G-C-D-F
+
+"Hi World"  (with space)
+→ H=A, i=A, [SPACE]=REST, W=C, o=C, r=F#, l=A, d=D
+→ MELODY: A-A-[REST]-C-C-F#-A-D
+
+"123"
+→ 1=C#, 2=D, 3=D#
+→ MELODY: C#-D-D# (chromatic ascending!)
+
+"Song!"
+→ S=G#, o=C, n=B, g=G, !=A
+→ MELODY: G#-C-B-G-A
+
+
+TIPS FOR GREAT MELODIES
+───────────────────────
+• Uppercase vs Lowercase: Same letter, ~1 octave apart. Mix for range!
+• Use SPACES to create pauses between phrases
+• Add punctuation (!, ?, .) for surprise notes
+• Type "0123456789" for a chromatic run (C#-D-D#-E-F-F#-G-G#-A-A#)
+• Fast tempo (50 ms) = zippy; Slow (400+ ms) = majestic
+• Sine = pure tone; Triangle = flute; Sawtooth = bright/buzzy
+• Repeat words for musical motifs
+• Octave range 1 = tight register; 3+ = wide & sweeping
+
+
+QUICK FORMULA REFERENCE
+───────────────────────
+For any character, to find its note in octave 3:
+  1. Get ASCII code: ord(char)
+  2. semitone_index = ASCII % 12
+  3. Look up NOTE_NAMES[semitone_index]
+
+Example: Letter 'M'
+  ord('M') = 77
+  77 % 12 = 5
+  NOTE_NAMES[5] = 'D'
+  Then octave is calculated separately based on range
+
+================================================================================
+                        Ready to compose? Start typing!
+================================================================================
