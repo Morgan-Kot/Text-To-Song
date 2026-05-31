@@ -1,1 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Song Cheat Sheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+            color: #E8E8F0;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #E94560;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            color: #E94560;
+            text-shadow: 0 2px 10px rgba(233, 69, 96, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #8888AA;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            font-size: 0.95em;
+            color: #533483;
+            font-style: italic;
+        }
+
+        /* Quick Reference Cards */
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: #0F3460;
+            border: 1px solid #2A2A4E;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #E94560;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .card h3 {
+            color: #E94560;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .card p {
+            color: #B0B0C8;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .card-info {
+            background: #0D0D1A;
+            border-left: 3px solid #533483;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: "Courier New", monospace;
+            font-size: 0.9em;
+            color: #A0C4FF;
+        }
+
+        /* Character Table */
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #E94560;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #533483;
+        }
+
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .char-cell {
+            background: #0F3460;
+            border: 1px solid #2A2A4E;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .char-cell:hover {
+            background: #164B8B;
+            border-color: #E94560;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.25);
+        }
+
+        .char-symbol {
+            font-size: 2em;
+            color: #E94560;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-family: monospace;
+        }
+
+        .char-name {
+            font-size: 0.9em;
+            color: #8888AA;
+            margin-bottom: 5px;
+        }
+
+        .char-note {
+            font-size: 1.1em;
+            color: #55CC88;
+            font-weight: bold;
+            font-family: "Courier New", monospace;
+        }
+
+        /* Examples Section */
+        .examples {
+            background: #0F3460;
+            border: 1px solid #2A2A4E;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .example-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #2A2A4E;
+        }
+
+        .example-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .example-title {
+            color: #E94560;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .example-text {
+            background: #0D0D1A;
+            border-left: 3px solid #E94560;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: "Courier New", monospace;
+            color: #A0C4FF;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+
+        .example-desc {
+            color: #B0B0C8;
+            font-size: 0.95em;
+        }
+
+        .example-notes {
+            background: #164B8B;
+            border-left: 3px solid #55CC88;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-family: "Courier New", monospace;
+            font-size: 0.9em;
+            color: #55CC88;
+        }
+
+        /* ASCII Reference */
+        .ascii-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #0F3460;
+            border: 1px solid #2A2A4E;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .ascii-table thead {
+            background: #0D0D1A;
+        }
+
+        .ascii-table th {
+            padding: 15px;
+            text-align: left;
+            color: #E94560;
+            font-weight: bold;
+            border-bottom: 2px solid #533483;
+        }
+
+        .ascii-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #2A2A4E;
+            color: #B0B0C8;
+        }
+
+        .ascii-table tr:hover {
+            background: #164B8B;
+        }
+
+        .char-col {
+            font-family: "Courier New", monospace;
+            font-size: 1.1em;
+            color: #55CC88;
+            font-weight: bold;
+        }
+
+        .ascii-col {
+            font-family: "Courier New", monospace;
+            color: #A0C4FF;
+        }
+
+        .note-col {
+            color: #E94560;
+            font-weight: bold;
+        }
+
+        /* Music theory box */
+        .music-theory {
+            background: linear-gradient(135deg, #164B8B 0%, #0F3460 100%);
+            border: 2px solid #533483;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .music-theory h3 {
+            color: #E94560;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .music-theory p {
+            color: #B0B0C8;
+            margin-bottom: 10px;
+        }
+
+        .notes-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .note-badge {
+            background: #0D0D1A;
+            border: 1px solid #E94560;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            font-family: "Courier New", monospace;
+            color: #E94560;
+            font-weight: bold;
+        }
+
+        /* Tips section */
+        .tips {
+            background: #0F3460;
+            border-left: 4px solid #55CC88;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+
+        .tips h3 {
+            color: #55CC88;
+            margin-bottom: 15px;
+        }
+
+        .tips ul {
+            list-style: none;
+            color: #B0B0C8;
+        }
+
+        .tips li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .tips li:before {
+            content: "♪ ";
+            position: absolute;
+            left: 0;
+            color: #E94560;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #2A2A4E;
+            color: #8888AA;
+            font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .section h2 {
+                font-size: 1.5em;
+            }
+
+            .char-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .quick-ref {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(233, 69, 96, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(233, 69, 96, 0.6); }
+        }
+
+        .pulse {
+            animation: glow 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>♪ Text-to-Song Cheat Sheet</h1>
+            <p class="subtitle">Master the mapping of every character to musical notes</p>
+            <p class="tagline">Every letter, digit, and symbol becomes a unique musical note based on its ASCII code</p>
+        </header>
+
+        <!-- Quick Reference Cards -->
+        <div class="quick-ref">
+            <div class="card">
+                <h3>The Algorithm</h3>
+                <p>Every character is converted to a musical note using a simple formula:</p>
+                <div class="card-info">
+                    semitone = ASCII % 12<br>
+                    octave = base + (ASCII ÷ 12) % range
+                </div>
+                <p style="margin-top: 12px; font-size: 0.9em;">This ensures every character always maps to the same note.</p>
+            </div>
+
+            <div class="card">
+                <h3>12 Chromatic Notes</h3>
+                <p>All notes repeat in a cycle of 12:</p>
+                <div class="card-info">
+                    A  A#  B  C  C#  D<br>
+                    D#  E  F  F#  G  G#
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Special Characters</h3>
+                <p><strong>Space</strong> = Rest (silence)</p>
+                <p><strong>Tab</strong> = Rest (silence)</p>
+                <p><strong>Newline</strong> = Short Rest</p>
+            </div>
+        </div>
+
+        <!-- Music Theory Explainer -->
+        <div class="music-theory">
+            <h3>🎼 The 12-Note Chromatic Scale</h3>
+            <p>Music repeats every 12 semitones. The text-to-song engine maps every character to one of these 12 notes, with octave variation based on the character's ASCII value.</p>
+            <div class="notes-list">
+                <div class="note-badge">A</div>
+                <div class="note-badge">A#</div>
+                <div class="note-badge">B</div>
+                <div class="note-badge">C</div>
+                <div class="note-badge">C#</div>
+                <div class="note-badge">D</div>
+                <div class="note-badge">D#</div>
+                <div class="note-badge">E</div>
+                <div class="note-badge">F</div>
+                <div class="note-badge">F#</div>
+                <div class="note-badge">G</div>
+                <div class="note-badge">G#</div>
+            </div>
+            <p style="margin-top: 15px;">Then it repeats: A, A#, B, C, C#, D, D#, E, F, F#, G, G#, A, A#, B…</p>
+        </div>
+
+        <!-- Uppercase Letters -->
+        <div class="section">
+            <h2>A–Z: Uppercase Letters</h2>
+            <div class="char-grid">
+                <div class="char-cell" title="ASCII 65">
+                    <div class="char-symbol">A</div>
+                    <div class="char-name">Letter A</div>
+                    <div class="char-note">A4</div>
+                </div>
+                <div class="char-cell" title="ASCII 66">
+                    <div class="char-symbol">B</div>
+                    <div class="char-name">Letter B</div>
+                    <div class="char-note">B4</div>
+                </div>
+                <div class="char-cell" title="ASCII 67">
+                    <div class="char-symbol">C</div>
+                    <div class="char-name">Letter C</div>
+                    <div class="char-note">C5</div>
+                </div>
+                <div class="char-cell" title="ASCII 68">
+                    <div class="char-symbol">D</div>
+                    <div class="char-name">Letter D</div>
+                    <div class="char-note">D5</div>
+                </div>
+                <div class="char-cell" title="ASCII 69">
+                    <div class="char-symbol">E</div>
+                    <div class="char-name">Letter E</div>
+                    <div class="char-note">E5</div>
+                </div>
+                <div class="char-cell" title="ASCII 70">
+                    <div class="char-symbol">F</div>
+                    <div class="char-name">Letter F</div>
+                    <div class="char-note">F5</div>
+                </div>
+                <div class="char-cell" title="ASCII 71">
+                    <div class="char-symbol">G</div>
+                    <div class="char-name">Letter G</div>
+                    <div class="char-note">G5</div>
+                </div>
+                <div class="char-cell" title="ASCII 72">
+                    <div class="char-symbol">H</div>
+                    <div class="char-name">Letter H</div>
+                    <div class="char-note">G#5</div>
+                </div>
+                <div class="char-cell" title="ASCII 73">
+                    <div class="char-symbol">I</div>
+                    <div class="char-name">Letter I</div>
+                    <div class="char-note">A5</div>
+                </div>
+                <div class="char-cell" title="ASCII 74">
+                    <div class="char-symbol">J</div>
+                    <div class="char-name">Letter J</div>
+                    <div class="char-note">A#5</div>
+                </div>
+                <div class="char-cell" title="ASCII 75">
+                    <div class="char-symbol">K</div>
+                    <div class="char-name">Letter K</div>
+                    <div class="char-note">B5</div>
+                </div>
+                <div class="char-cell" title="ASCII 76">
+                    <div class="char-symbol">L</div>
+                    <div class="char-name">Letter L</div>
+                    <div class="char-note">C6</div>
+                </div>
+                <div class="char-cell" title="ASCII 77">
+                    <div class="char-symbol">M</div>
+                    <div class="char-name">Letter M</div>
+                    <div class="char-note">C#6</div>
+                </div>
+                <div class="char-cell" title="ASCII 78">
+                    <div class="char-symbol">N</div>
+                    <div class="char-name">Letter N</div>
+                    <div class="char-note">D6</div>
+                </div>
+                <div class="char-cell" title="ASCII 79">
+                    <div class="char-symbol">O</div>
+                    <div class="char-name">Letter O</div>
+                    <div class="char-note">D#6</div>
+                </div>
+                <div class="char-cell" title="ASCII 80">
+                    <div class="char-symbol">P</div>
+                    <div class="char-name">Letter P</div>
+                    <div class="char-note">E6</div>
+                </div>
+                <div class="char-cell" title="ASCII 81">
+                    <div class="char-symbol">Q</div>
+                    <div class="char-name">Letter Q</div>
+                    <div class="char-note">F6</div>
+                </div>
+                <div class="char-cell" title="ASCII 82">
+                    <div class="char-symbol">R</div>
+                    <div class="char-name">Letter R</div>
+                    <div class="char-note">F#6</div>
+                </div>
+                <div class="char-cell" title="ASCII 83">
+                    <div class="char-symbol">S</div>
+                    <div class="char-name">Letter S</div>
+                    <div class="char-note">G6</div>
+                </div>
+                <div class="char-cell" title="ASCII 84">
+                    <div class="char-symbol">T</div>
+                    <div class="char-name">Letter T</div>
+                    <div class="char-note">G#6</div>
+                </div>
+                <div class="char-cell" title="ASCII 85">
+                    <div class="char-symbol">U</div>
+                    <div class="char-name">Letter U</div>
+                    <div class="char-note">A6</div>
+                </div>
+                <div class="char-cell" title="ASCII 86">
+                    <div class="char-symbol">V</div>
+                    <div class="char-name">Letter V</div>
+                    <div class="char-note">A#6</div>
+                </div>
+                <div class="char-cell" title="ASCII 87">
+                    <div class="char-symbol">W</div>
+                    <div class="char-name">Letter W</div>
+                    <div class="char-note">B6</div>
+                </div>
+                <div class="char-cell" title="ASCII 88">
+                    <div class="char-symbol">X</div>
+                    <div class="char-name">Letter X</div>
+                    <div class="char-note">C7</div>
+                </div>
+                <div class="char-cell" title="ASCII 89">
+                    <div class="char-symbol">Y</div>
+                    <div class="char-name">Letter Y</div>
+                    <div class="char-note">C#7</div>
+                </div>
+                <div class="char-cell" title="ASCII 90">
+                    <div class="char-symbol">Z</div>
+                    <div class="char-name">Letter Z</div>
+                    <div class="char-note">D7</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lowercase Letters -->
+        <div class="section">
+            <h2>a–z: Lowercase Letters</h2>
+            <div class="char-grid">
+                <div class="char-cell" title="ASCII 97">
+                    <div class="char-symbol">a</div>
+                    <div class="char-name">Letter a</div>
+                    <div class="char-note">A5</div>
+                </div>
+                <div class="char-cell" title="ASCII 98">
+                    <div class="char-symbol">b</div>
+                    <div class="char-name">Letter b</div>
+                    <div class="char-note">B5</div>
+                </div>
+                <div class="char-cell" title="ASCII 99">
+                    <div class="char-symbol">c</div>
+                    <div class="char-name">Letter c</div>
+                    <div class="char-note">C6</div>
+                </div>
+                <div class="char-cell" title="ASCII 100">
+                    <div class="char-symbol">d</div>
+                    <div class="char-name">Letter d</div>
+                    <div class="char-note">C#6</div>
+                </div>
+                <div class="char-cell" title="ASCII 101">
+                    <div class="char-symbol">e</div>
+                    <div class="char-name">Letter e</div>
+                    <div class="char-note">D6</div>
+                </div>
+                <div class="char-cell" title="ASCII 102">
+                    <div class="char-symbol">f</div>
+                    <div class="char-name">Letter f</div>
+                    <div class="char-note">D#6</div>
+                </div>
+                <div class="char-cell" title="ASCII 103">
+                    <div class="char-symbol">g</div>
+                    <div class="char-name">Letter g</div>
+                    <div class="char-note">E6</div>
+                </div>
+                <div class="char-cell" title="ASCII 104">
+                    <div class="char-symbol">h</div>
+                    <div class="char-name">Letter h</div>
+                    <div class="char-note">F6</div>
+                </div>
+                <div class="char-cell" title="ASCII 105">
+                    <div class="char-symbol">i</div>
+                    <div class="char-name">Letter i</div>
+                    <div class="char-note">F#6</div>
+                </div>
+                <div class="char-cell" title="ASCII 106">
+                    <div class="char-symbol">j</div>
+                    <div class="char-name">Letter j</div>
+                    <div class="char-note">G6</div>
+                </div>
+                <div class="char-cell" title="ASCII 107">
+                    <div class="char-symbol">k</div>
+                    <div class="char-name">Letter k</div>
+                    <div class="char-note">G#6</div>
+                </div>
+                <div class="char-cell" title="ASCII 108">
+                    <div class="char-symbol">l</div>
+                    <div class="char-name">Letter l</div>
+                    <div class="char-note">A6</div>
+                </div>
+                <div class="char-cell" title="ASCII 109">
+                    <div class="char-symbol">m</div>
+                    <div class="char-name">Letter m</div>
+                    <div class="char-note">A#6</div>
+                </div>
+                <div class="char-cell" title="ASCII 110">
+                    <div class="char-symbol">n</div>
+                    <div class="char-name">Letter n</div>
+                    <div class="char-note">B6</div>
+                </div>
+                <div class="char-cell" title="ASCII 111">
+                    <div class="char-symbol">o</div>
+                    <div class="char-name">Letter o</div>
+                    <div class="char-note">C7</div>
+                </div>
+                <div class="char-cell" title="ASCII 112">
+                    <div class="char-symbol">p</div>
+                    <div class="char-name">Letter p</div>
+                    <div class="char-note">C#7</div>
+                </div>
+                <div class="char-cell" title="ASCII 113">
+                    <div class="char-symbol">q</div>
+                    <div class="char-name">Letter q</div>
+                    <div class="char-note">D7</div>
+                </div>
+                <div class="char-cell" title="ASCII 114">
+                    <div class="char-symbol">r</div>
+                    <div class="char-name">Letter r</div>
+                    <div class="char-note">D#7</div>
+                </div>
+                <div class="char-cell" title="ASCII 115">
+                    <div class="char-symbol">s</div>
+                    <div class="char-name">Letter s</div>
+                    <div class="char-note">E7</div>
+                </div>
+                <div class="char-cell" title="ASCII 116">
+                    <div class="char-symbol">t</div>
+                    <div class="char-name">Letter t</div>
+                    <div class="char-note">F7</div>
+                </div>
+                <div class="char-cell" title="ASCII 117">
+                    <div class="char-symbol">u</div>
+                    <div class="char-name">Letter u</div>
+                    <div class="char-note">F#7</div>
+                </div>
+                <div class="char-cell" title="ASCII 118">
+                    <div class="char-symbol">v</div>
+                    <div class="char-name">Letter v</div>
+                    <div class="char-note">G7</div>
+                </div>
+                <div class="char-cell" title="ASCII 119">
+                    <div class="char-symbol">w</div>
+                    <div class="char-name">Letter w</div>
+                    <div class="char-note">G#7</div>
+                </div>
+                <div class="char-cell" title="ASCII 120">
+                    <div class="char-symbol">x</div>
+                    <div class="char-name">Letter x</div>
+                    <div class="char-note">A7</div>
+                </div>
+                <div class="char-cell" title="ASCII 121">
+                    <div class="char-symbol">y</div>
+                    <div class="char-name">Letter y</div>
+                    <div class="char-note">A#7</div>
+                </div>
+                <div class="char-cell" title="ASCII 122">
+                    <div class="char-symbol">z</div>
+                    <div class="char-name">Letter z</div>
+                    <div class="char-note">B7</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Numbers -->
+        <div class="section">
+            <h2>0–9: Digits</h2>
+            <div class="char-grid">
+                <div class="char-cell" title="ASCII 48">
+                    <div class="char-symbol">0</div>
+                    <div class="char-name">Zero</div>
+                    <div class="char-note">C4</div>
+                </div>
+                <div class="char-cell" title="ASCII 49">
+                    <div class="char-symbol">1</div>
+                    <div class="char-name">One</div>
+                    <div class="char-note">C#4</div>
+                </div>
+                <div class="char-cell" title="ASCII 50">
+                    <div class="char-symbol">2</div>
+                    <div class="char-name">Two</div>
+                    <div class="char-note">D4</div>
+                </div>
+                <div class="char-cell" title="ASCII 51">
+                    <div class="char-symbol">3</div>
+                    <div class="char-name">Three</div>
+                    <div class="char-note">D#4</div>
+                </div>
+                <div class="char-cell" title="ASCII 52">
+                    <div class="char-symbol">4</div>
+                    <div class="char-name">Four</div>
+                    <div class="char-note">E4</div>
+                </div>
+                <div class="char-cell" title="ASCII 53">
+                    <div class="char-symbol">5</div>
+                    <div class="char-name">Five</div>
+                    <div class="char-note">F4</div>
+                </div>
+                <div class="char-cell" title="ASCII 54">
+                    <div class="char-symbol">6</div>
+                    <div class="char-name">Six</div>
+                    <div class="char-note">F#4</div>
+                </div>
+                <div class="char-cell" title="ASCII 55">
+                    <div class="char-symbol">7</div>
+                    <div class="char-name">Seven</div>
+                    <div class="char-note">G4</div>
+                </div>
+                <div class="char-cell" title="ASCII 56">
+                    <div class="char-symbol">8</div>
+                    <div class="char-name">Eight</div>
+                    <div class="char-note">G#4</div>
+                </div>
+                <div class="char-cell" title="ASCII 57">
+                    <div class="char-symbol">9</div>
+                    <div class="char-name">Nine</div>
+                    <div class="char-note">A4</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Symbols -->
+        <div class="section">
+            <h2>! @ # $ % ^ & * Symbols & Punctuation</h2>
+            <table class="ascii-table">
+                <thead>
+                    <tr>
+                        <th>Character</th>
+                        <th>Name</th>
+                        <th>ASCII</th>
+                        <th>Note (Base Octave 3)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="char-col">!</td>
+                        <td>Exclamation</td>
+                        <td class="ascii-col">33</td>
+                        <td class="note-col">F#3</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">"</td>
+                        <td>Quote</td>
+                        <td class="ascii-col">34</td>
+                        <td class="note-col">G3</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">#</td>
+                        <td>Hash</td>
+                        <td class="ascii-col">35</td>
+                        <td class="note-col">G#3</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">$</td>
+                        <td>Dollar</td>
+                        <td class="ascii-col">36</td>
+                        <td class="note-col">A3</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">%</td>
+                        <td>Percent</td>
+                        <td class="ascii-col">37</td>
+                        <td class="note-col">A#3</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">&</td>
+                        <td>Ampersand</td>
+                        <td class="ascii-col">38</td>
+                        <td class="note-col">B3</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">'</td>
+                        <td>Apostrophe</td>
+                        <td class="ascii-col">39</td>
+                        <td class="note-col">C4</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">(</td>
+                        <td>Left Paren</td>
+                        <td class="ascii-col">40</td>
+                        <td class="note-col">C#4</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">)</td>
+                        <td>Right Paren</td>
+                        <td class="ascii-col">41</td>
+                        <td class="note-col">D4</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">*</td>
+                        <td>Asterisk</td>
+                        <td class="ascii-col">42</td>
+                        <td class="note-col">D#4</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">+</td>
+                        <td>Plus</td>
+                        <td class="ascii-col">43</td>
+                        <td class="note-col">E4</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">,</td>
+                        <td>Comma</td>
+                        <td class="ascii-col">44</td>
+                        <td class="note-col">F4</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">-</td>
+                        <td>Hyphen</td>
+                        <td class="ascii-col">45</td>
+                        <td class="note-col">F#4</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">.</td>
+                        <td>Period</td>
+                        <td class="ascii-col">46</td>
+                        <td class="note-col">G4</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">/</td>
+                        <td>Slash</td>
+                        <td class="ascii-col">47</td>
+                        <td class="note-col">G#4</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">:</td>
+                        <td>Colon</td>
+                        <td class="ascii-col">58</td>
+                        <td class="note-col">D5</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">;</td>
+                        <td>Semicolon</td>
+                        <td class="ascii-col">59</td>
+                        <td class="note-col">D#5</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col"><</td>
+                        <td>Less Than</td>
+                        <td class="ascii-col">60</td>
+                        <td class="note-col">E5</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">=</td>
+                        <td>Equals</td>
+                        <td class="ascii-col">61</td>
+                        <td class="note-col">F5</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">></td>
+                        <td>Greater Than</td>
+                        <td class="ascii-col">62</td>
+                        <td class="note-col">F#5</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">?</td>
+                        <td>Question</td>
+                        <td class="ascii-col">63</td>
+                        <td class="note-col">G5</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">@</td>
+                        <td>At Sign</td>
+                        <td class="ascii-col">64</td>
+                        <td class="note-col">G#5</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">[</td>
+                        <td>Left Bracket</td>
+                        <td class="ascii-col">91</td>
+                        <td class="note-col">B5</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">\</td>
+                        <td>Backslash</td>
+                        <td class="ascii-col">92</td>
+                        <td class="note-col">C6</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">]</td>
+                        <td>Right Bracket</td>
+                        <td class="ascii-col">93</td>
+                        <td class="note-col">C#6</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">^</td>
+                        <td>Caret</td>
+                        <td class="ascii-col">94</td>
+                        <td class="note-col">D6</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">_</td>
+                        <td>Underscore</td>
+                        <td class="ascii-col">95</td>
+                        <td class="note-col">D#6</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">`</td>
+                        <td>Backtick</td>
+                        <td class="ascii-col">96</td>
+                        <td class="note-col">E6</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">{</td>
+                        <td>Left Brace</td>
+                        <td class="ascii-col">123</td>
+                        <td class="note-col">B6</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">|</td>
+                        <td>Pipe</td>
+                        <td class="ascii-col">124</td>
+                        <td class="note-col">C7</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">}</td>
+                        <td>Right Brace</td>
+                        <td class="ascii-col">125</td>
+                        <td class="note-col">C#7</td>
+                    </tr>
+                    <tr>
+                        <td class="char-col">~</td>
+                        <td>Tilde</td>
+                        <td class="ascii-col">126</td>
+                        <td class="note-col">D7</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Examples Section -->
+        <div class="section">
+            <h2>🎵 Example Conversions</h2>
+            <div class="examples">
+                <div class="example-item">
+                    <div class="example-title">Example 1: "Hello"</div>
+                    <div class="example-text">Hello</div>
+                    <div class="example-notes">
+                        H (72) = 72 % 12 = 0 → A<br>
+                        e (101) = 101 % 12 = 5 → F<br>
+                        l (108) = 108 % 12 = 0 → A<br>
+                        l (108) = 108 % 12 = 0 → A<br>
+                        o (111) = 111 % 12 = 3 → C
+                    </div>
+                    <div class="example-desc">
+                        <strong>Result:</strong> A-F-A-A-C (ascending with variation)
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <div class="example-title">Example 2: "Music"</div>
+                    <div class="example-text">Music</div>
+                    <div class="example-notes">
+                        M (77) = 77 % 12 = 5 → F<br>
+                        u (117) = 117 % 12 = 9 → A<br>
+                        s (115) = 115 % 12 = 7 → G<br>
+                        i (105) = 105 % 12 = 9 → A<br>
+                        c (99) = 99 % 12 = 3 → C
+                    </div>
+                    <div class="example-desc">
+                        <strong>Result:</strong> F-A-G-A-C (musical variation)
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <div class="example-title">Example 3: "Code"</div>
+                    <div class="example-text">Code</div>
+                    <div class="example-notes">
+                        C (67) = 67 % 12 = 7 → G<br>
+                        o (111) = 111 % 12 = 3 → C<br>
+                        d (100) = 100 % 12 = 4 → D<br>
+                        e (101) = 101 % 12 = 5 → F
+                    </div>
+                    <div class="example-desc">
+                        <strong>Result:</strong> G-C-D-F (tech melody!)
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <div class="example-title">Example 4: "Hi World" (with space)</div>
+                    <div class="example-text">Hi World</div>
+                    <div class="example-notes">
+                        H (72) = 72 % 12 = 0 → A<br>
+                        i (105) = 105 % 12 = 9 → A<br>
+                        [SPACE] → ♫ REST (silence)<br>
+                        W (87) = 87 % 12 = 3 → C<br>
+                        o (111) = 111 % 12 = 3 → C<br>
+                        r (114) = 114 % 12 = 6 → F#<br>
+                        l (108) = 108 % 12 = 0 → A<br>
+                        d (100) = 100 % 12 = 4 → D
+                    </div>
+                    <div class="example-desc">
+                        <strong>Result:</strong> A-A-[REST]-C-C-F#-A-D (two phrases separated by silence)
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <div class="example-title">Example 5: "123" (digits)</div>
+                    <div class="example-text">123</div>
+                    <div class="example-notes">
+                        1 (49) = 49 % 12 = 1 → A#<br>
+                        2 (50) = 50 % 12 = 2 → B<br>
+                        3 (51) = 51 % 12 = 3 → C
+                    </div>
+                    <div class="example-desc">
+                        <strong>Result:</strong> A#-B-C (ascending chromatic phrase!)
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <div class="example-title">Example 6: "Song!" (with punctuation)</div>
+                    <div class="example-text">Song!</div>
+                    <div class="example-notes">
+                        S (83) = 83 % 12 = 11 → G#<br>
+                        o (111) = 111 % 12 = 3 → C<br>
+                        n (110) = 110 % 12 = 2 → B<br>
+                        g (103) = 103 % 12 = 7 → G<br>
+                        ! (33) = 33 % 12 = 9 → A
+                    </div>
+                    <div class="example-desc">
+                        <strong>Result:</strong> G#-C-B-G-A (exclamation adds a surprise note!)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tips & Tricks -->
+        <div class="tips">
+            <h3>💡 Tips for Creating Melodies</h3>
+            <ul>
+                <li><strong>Uppercase vs Lowercase:</strong> Same letters produce notes ~12 semitones apart (one octave higher for lowercase). Mix them for range!</li>
+                <li><strong>Spacing:</strong> Use spaces and newlines to create rhythmic pauses. Group words for musical phrases.</li>
+                <li><strong>Punctuation:</strong> Add ! ? . , and other symbols to insert unexpected notes and spice up melodies.</li>
+                <li><strong>Numbers:</strong> 0-9 produce a sequence of 12 semitones. Try "0123456789" for a chromatic run!</li>
+                <li><strong>Repetition:</strong> Type the same word twice to create a musical motif that repeats.</li>
+                <li><strong>Tempo:</strong> Fast (50 ms) creates zippy arpeggios; slow (400+ ms) creates majestic hymns.</li>
+                <li><strong>Waveform:</strong> Sine = smooth; Triangle = flute-like; Sawtooth = bright and buzzy.</li>
+                <li><strong>Octave Range:</strong> Try range=1 for mono-register harmonies, or range=3+ for wide, sweeping melodies.</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>♪ Text-to-Song Notepad — Convert any text into music through algorithmic composition ♪</p>
+            <p style="margin-top: 10px; color: #666;">Made with love for creative coders</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple interactivity: make chars clickable to show info
+        document.querySelectorAll('.char-cell').forEach(cell => {
+            cell.addEventListener('click', () => {
+                const symbol = cell.querySelector('.char-symbol').textContent;
+                const note = cell.querySelector('.char-note').textContent;
+                console.log(`Character: ${symbol} → Note: ${note}`);
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
